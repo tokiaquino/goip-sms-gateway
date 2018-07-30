@@ -23,7 +23,9 @@ require dirname(__DIR__) . '/src/Request.php';
 //   8 channel GSM Module the port range
 //   will be 9991-9998 etc. 9991 will be
 //   the default channel.
-$client = new GoIP\Client('192.168.1.42');
+$client = new GoIP\Client('192.168.0.31');
+
+$client->setId(1002);
 
 // set the client password
 $client->setPassword('admin');
@@ -35,9 +37,10 @@ try {
     $client
     // set the channel, we are going
     // to send an sms request to channel 1
-    ->setPort(9991)
+    //->setPort(9992)
+    ->setPort(10992)
     // send an sms request
-    ->sendSms('BAL', '8888');
+    ->sendSms('BAL 2 abc', '0985848443');
 
     echo 'Message Successfully Sent!';
 } catch(\Exception $e) {

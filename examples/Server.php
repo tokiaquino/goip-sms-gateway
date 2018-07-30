@@ -15,7 +15,7 @@ require dirname(__DIR__) . '/src/Server.php';
 // initialize server
 // - hostname to bind to
 // - port to bind to
-$server = new GoIP\Server('192.168.1.52', 44444);
+$server = new GoIP\Server('192.168.0.25', 44444);
 
 $server
 // set timeout before reading next data
