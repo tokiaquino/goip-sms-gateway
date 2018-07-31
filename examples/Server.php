@@ -15,14 +15,14 @@ require dirname(__DIR__) . '/src/Server.php';
 // initialize server
 // - hostname to bind to
 // - port to bind to
-$server = new GoIP\Server('192.168.0.25', 44444);
+$server = new GoIP\Server('192.168.0.32', 44444);
 
 $server
 // set timeout before reading next data
 ->setReadTimeout(1)
 
 // on connection bind
-->on('bind', function($server) {
+->on('bind', function($server, $host, $port) {
     echo 'Socket binded to: ' . $server->getHost() . ':' . $server->getPort() . PHP_EOL . PHP_EOL;
 })
 
@@ -54,7 +54,7 @@ $server
 
 // on wait (waiting for valid data)
 ->on('wait', function($server) {
-    echo 'Waiting for the client to send data.' . PHP_EOL . PHP_EOL;
+    //echo time() . ' Waiting for the client to send data.' . PHP_EOL . PHP_EOL;
 })
 
 // on server end
