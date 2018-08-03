@@ -25,7 +25,7 @@ require dirname(__DIR__) . '/src/Request.php';
 //   the default channel.
 $client = new GoIP\Client('192.168.0.31');
 
-$client->setId(1002);
+//$client->setId(1002);
 
 // set the client password
 $client->setPassword('admin');
