@@ -224,18 +224,6 @@ class Server extends Event
 
                 continue;
             }
-            
-            /*if (isset($data['DELIVER'])){
-                $deliver = $this->request($host, $port)->deliveryReportAck($data);
-                
-                $this->trigger('delivery-report', $this, $data, $buffer);
-                
-                if(!$this->end) {
-                    sleep($this->timeout);
-                }
-                
-                //continue;
-            }*/
 
             // try to check if buffer has message
             $message = Util::getMessage($buffer);
@@ -248,10 +236,6 @@ class Server extends Event
                 }
                 
                 if ( isset($message['DELIVER']) ){
-                    
-                    echo "\033[32mDelivery : " . " \033[0m" . PHP_EOL;
-                    echo "\033[32m" . Util::parseString($buffer) . " \033[0m" ;
-                    echo PHP_EOL; 
                     $received = $this->request($from, $port)->deliveryReportAck($message['DELIVER'], 'OK');
                 }
 

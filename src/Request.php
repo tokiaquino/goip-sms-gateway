@@ -237,7 +237,7 @@ class Request extends Base
     public function deliveryReportAck($data)
     {
         // generate ack message
-        $message = $this->message()->getConstant('DELIVERY_REPORT_ACK',$data['id'], 'OK');    
+        $message = $this->message()->getConstant('DELIVERY_REPORT_ACK',$data, 'OK');
     
         // send the request
         return $this->send($message);
