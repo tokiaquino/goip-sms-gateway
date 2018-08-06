@@ -62,6 +62,23 @@ class Message
      */
     const RECEIVE_SMS_ACK = 'RECEIVE %s %s\n';
 
+    
+    
+    /**
+     * Delivery Report.
+     * 
+     * @const string
+     */
+    const DELIVERY_REPORT = 'DELIVER:%s;id:%s;password:%s;sms_no:%s;state:%s;num:%s\n';
+    
+    /**
+     * Delivery report ACK
+     * 
+     * @const string
+     */
+    const DELIVERY_REPORT_ACK = 'DELIVER %s %s\n';
+    
+
     /**
      * Get the request message constant
      * and return it's formatted value.

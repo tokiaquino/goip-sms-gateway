@@ -15,27 +15,30 @@ require dirname(__DIR__) . '/src/Server.php';
 // initialize server
 // - hostname to bind to
 // - port to bind to
-$server = new GoIP\Server('192.168.0.25', 44444);
+$server = new GoIP\Server('192.168.0.32', 44444);
 
 $server
 // set timeout before reading next data
 ->setReadTimeout(1)
 
 // on connection bind
-->on('bind', function($server) {
+->on('bind', function($server, $host, $port) {
     echo 'Socket binded to: ' . $server->getHost() . ':' . $server->getPort() . PHP_EOL . PHP_EOL;
 })
 
 // on request data
 ->on('data', function($server, $buffer) {
-    echo 'Server got buffer data from: ' . $server->getOrigin('host') . ':' . $server->getOrigin('port') . PHP_EOL;
-    echo GoIP\Util::parseString($buffer);
-    echo PHP_EOL;
+    $data = GoIP\Util::parseArray($buffer);
+    if ( !( isset($data['signal']) || isset($data['gsm_status']) || isset($data['imei']) ) ){
+        echo 'Server got buffer data from: ' . $server->getOrigin('host') . ':' . $server->getOrigin('port') . PHP_EOL;
+        echo GoIP\Util::parseString($buffer);
+        echo PHP_EOL;        
+    }
 })
 
 // on keep-alive request ack
 ->on('ack', function($server) {
-    echo 'Keep-Alive request acknowledged.' . PHP_EOL . PHP_EOL;
+    //echo 'Keep-Alive request acknowledged.' . PHP_EOL . PHP_EOL;
 })
 
 // on ack failed
@@ -47,14 +50,20 @@ $server
 ->on('message', function($server, $buffer) {
     echo "\033[32mServer got a message from: " . $server->getOrigin('host') . ":" . $server->getOrigin('port') . " \033[0m" . PHP_EOL;
     echo "\033[32m" . GoIP\Util::parseString($buffer) . " \033[0m" ;
-    echo PHP_EOL;
+    echo PHP_EOL;        
 
     // $server->end();
 })
 
 // on wait (waiting for valid data)
 ->on('wait', function($server) {
-    echo 'Waiting for the client to send data.' . PHP_EOL . PHP_EOL;
+    //echo ' Waiting for the client to send data.' . PHP_EOL . PHP_EOL;
+})
+
+->on('delivery-report', function($server, $data, $buffer){
+    echo "\033[32mServer got a DELIVERY REPORT from: " . $server->getOrigin('host') . ":" . $server->getOrigin('port') . " \033[0m" . PHP_EOL;
+    echo "\033[32m" . GoIP\Util::parseString($buffer) . " \033[0m" ;
+    echo PHP_EOL;
 })
 
 // on server end

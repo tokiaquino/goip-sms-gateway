@@ -90,7 +90,8 @@ class Util extends Base
         $data = self::parseArray($buffer);
 
         // if received key is set and msg
-        if(isset($data['RECEIVE']) && isset($data['msg'])) {
+        if ((isset($data['RECEIVE']) && isset($data['msg']))
+            || (isset($data['DELIVER']) && isset($data['state']) ) ){
             return $data;
         }
 

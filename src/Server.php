@@ -231,7 +231,13 @@ class Server extends Event
             // if we have a message
             if(!empty($message)) {
                 // send receive acknowledgement
-                $received = $this->request($from, $port)->receivedAck($message['RECEIVE'], 'OK');
+                if ( isset($message['RECEIVE']) ){
+                    $received = $this->request($from, $port)->receivedAck($message['RECEIVE'], 'OK');                    
+                }
+                
+                if ( isset($message['DELIVER']) ){
+                    $received = $this->request($from, $port)->deliveryReportAck($message['DELIVER'], 'OK');
+                }
 
                 // trigger message event
                 $this->trigger('message', $this, $buffer);
@@ -259,7 +265,10 @@ class Server extends Event
     public function request($host, $port)
     {
         // return request class
-        return new Request($this->socket, $host, $port);
+        //return new Request($this->socket, $host, $port);
+        $req =  new Request($this->socket, $host, $port);
+        //$req->setDebug(true);
+        return $req;
     }
 
     /**

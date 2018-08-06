@@ -233,6 +233,15 @@ class Request extends Base
 
         return false;
     }
+    
+    public function deliveryReportAck($data)
+    {
+        // generate ack message
+        $message = $this->message()->getConstant('DELIVERY_REPORT_ACK',$data, 'OK');
+    
+        // send the request
+        return $this->send($message);
+    }
 
     /**
      * Send end request.
